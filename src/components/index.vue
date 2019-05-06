@@ -23,7 +23,6 @@
           default-active="2"
           class="el-menu-vertical-demo"
         >
-          <el-submenu index="1">
             <template slot="title">
               <i class="el-icon-location"></i>
               <span>导航一</span>
@@ -31,8 +30,6 @@
             <el-menu-item-group>
               <el-menu-item index="users"><i class="el-icon-menu"></i>用户列表</el-menu-item>
             </el-menu-item-group>
-          </el-submenu>
-          
           
         </el-menu>
       </el-aside>
