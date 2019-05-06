@@ -19,7 +19,7 @@
     </el-header>
     <el-container>
       <el-aside class="index_aside" width="200px">
-        <el-menu
+        <el-menu router
           default-active="2"
           class="el-menu-vertical-demo"
         >
@@ -29,15 +29,16 @@
               <span>导航一</span>
             </template>
             <el-menu-item-group>
-              <el-menu-item index="1-1"><i class="el-icon-menu"></i>选项1</el-menu-item>
-              <el-menu-item index="1-2"><i class="el-icon-menu"></i>选项2</el-menu-item>
+              <el-menu-item index="users"><i class="el-icon-menu"></i>用户列表</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
           
           
         </el-menu>
       </el-aside>
-      <el-main class="index_main">Main</el-main>
+      <el-main class="index_main">
+          <router-view></router-view>
+      </el-main>
     </el-container>
   </el-container>
 </template>
