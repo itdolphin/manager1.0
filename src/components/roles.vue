@@ -29,7 +29,7 @@
 
 <script>
 export default {
-  name: "users",
+  name: "roles",
   data() {
     return {
       tableData: [

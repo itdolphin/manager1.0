@@ -3,10 +3,10 @@
     <!-- 面包屑结构 -->
     <el-breadcrumb class="my_breadcrumb" separator-class="el-icon-arrow-right">
       <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item>权限管理</el-breadcrumb-item>
-      <el-breadcrumb-item>权限列表</el-breadcrumb-item>
+      <el-breadcrumb-item>订单管理</el-breadcrumb-item>
+      <el-breadcrumb-item>订单列表</el-breadcrumb-item>
     </el-breadcrumb>
-    
+   
     <!-- 表格结构 -->
     <el-table :data="tableData" border style="width: 100%">
       <el-table-column prop="#" label="#" width="180"></el-table-column>
@@ -16,13 +16,13 @@
       <el-table-column prop="userstate" label="用户状态" width="180"></el-table-column>
       <el-table-column prop="run" label="操作" width="180"></el-table-column>
     </el-table>
-   
+    
   </div>
 </template>
 
 <script>
 export default {
-  name: "rights",
+  name: "orders",
   data() {
     return {
       tableData: [

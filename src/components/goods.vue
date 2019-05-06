@@ -30,13 +30,19 @@
       <el-table-column prop="userstate" label="用户状态" width="180"></el-table-column>
       <el-table-column prop="run" label="操作" width="180"></el-table-column>
     </el-table>
-    
+    <el-pagination
+      :current-page="1"
+      :page-sizes="[3, 6, 9, 12]"
+      :page-size="6"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="100">
+    </el-pagination>
   </div>
 </template>
 
 <script>
 export default {
-  name: "users",
+  name: "goods",
   data() {
     return {
       tableData: [

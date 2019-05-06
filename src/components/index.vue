@@ -8,11 +8,11 @@
           </div>
         </el-col>
         <el-col :span="19">
-          <div class="grid-content bg-purple-light" id="title">Apple Background monitoring center</div>
+          <div class="grid-content bg-purple-light" id="title">Apple Inc. Background monitoring center</div>
         </el-col>
         <el-col :span="1">
           <div class="grid-content bg-purple">
-            <el-button type="primary" id="quit">QUIT</el-button>
+              <el-button type="info" id="quit" circle>QUIT</el-button>
           </div>
         </el-col>
       </el-row>
@@ -59,6 +59,24 @@
               <el-menu-item index="categories"><i class="el-icon-menu"></i>商品分类</el-menu-item>
             </el-menu-item-group>
             </el-submenu>
+            <el-submenu index="4">
+            <template slot="title">
+              <i class="el-icon-location"></i>
+              <span>订单管理</span>
+            </template>
+            <el-menu-item-group>
+              <el-menu-item index="orders"><i class="el-icon-menu"></i>订单列表</el-menu-item>
+            </el-menu-item-group>
+            </el-submenu>
+            <el-submenu index="5">
+            <template slot="title">
+              <i class="el-icon-location"></i>
+              <span>数据统计</span>
+            </template>
+            <el-menu-item-group>
+              <el-menu-item index="reports"><i class="el-icon-menu"></i>数据报表</el-menu-item>
+            </el-menu-item-group>
+            </el-submenu>
         </el-menu>
       </el-aside>
       <el-main class="index_main">
@@ -102,8 +120,12 @@ body {
       color: white;
     }
     .index_main {
-      background-color: #fafafa;
+      background-color: #e9eef3;
+      
     }
+    .index_main.el-main{
+        padding-top: 0;
+      }
   }
 }
 </style>

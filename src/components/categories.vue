@@ -35,7 +35,7 @@
 
 <script>
 export default {
-  name: "users",
+  name: "categories",
   data() {
     return {
       tableData: [
