@@ -17,18 +17,20 @@
       </el-col>
       <el-col :span="6">
         <div class="grid-content bg-purple-light">
-          <el-button type="success" plain>添加用户</el-button>
+          <el-button type="success" plain class="add_user">添加用户</el-button>
         </div>
       </el-col>
     </el-row>
     <!-- 表格结构 -->
     <el-table :data="tableData" border style="width: 100%">
-      <el-table-column prop="#" label="#" width="180"></el-table-column>
-      <el-table-column prop="name" label="姓名" width="180"></el-table-column>
-      <el-table-column prop="email" label="邮箱" width="180"></el-table-column>
-      <el-table-column prop="phone" label="电话" width="180"></el-table-column>
-      <el-table-column prop="userstate" label="用户状态" width="180"></el-table-column>
-      <el-table-column prop="run" label="操作" width="180"></el-table-column>
+      <el-table-column prop="#" label="#" width="30"></el-table-column>
+      <el-table-column prop="name" label="姓名" width="160"></el-table-column>
+      <el-table-column prop="email" label="邮箱" width="300"></el-table-column>
+      <el-table-column prop="phone" label="电话" width="300"></el-table-column>
+      <el-table-column prop="userstate" label="用户状态" width="80">
+        <el-switch v-model="value2" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
+      </el-table-column>
+      <el-table-column prop="run" label="操作" width="200"></el-table-column>
     </el-table>
     <!-- 分页/选页容量 -->
     <el-pagination
@@ -36,8 +38,8 @@
       :page-sizes="[3, 6, 9, 12]"
       :page-size="6"
       layout="total, sizes, prev, pager, next, jumper"
-      :total="100">
-    </el-pagination>
+      :total="100"
+    ></el-pagination>
   </div>
 </template>
 
@@ -46,24 +48,26 @@ export default {
   name: "users",
   data() {
     return {
+      value1: true,
+        value2: true,
       tableData: [
         {
-          date: "2016-05-02",
+          bvf: "2016-05-02",
           name: "王小虎",
           address: "上海市普陀区金沙江路 1518 弄"
         },
         {
-          date: "2016-05-04",
+          bvf: "2016-05-04",
           name: "王小虎",
           address: "上海市普陀区金沙江路 1517 弄"
         },
         {
-          date: "2016-05-01",
+          bvf: "2016-05-01",
           name: "王小虎",
           address: "上海市普陀区金沙江路 1519 弄"
         },
         {
-          date: "2016-05-03",
+          bvf: "2016-05-03",
           name: "王小虎",
           address: "上海市普陀区金沙江路 1516 弄"
         }
@@ -74,9 +78,12 @@ export default {
 </script>
 
 <style lang='scss'>
-    .my_breadcrumb{
-        height: 40px;
-        line-height: 40px;
-        background-color: #d3dce6;
-    }
+.my_breadcrumb {
+  height: 40px;
+  line-height: 40px;
+  background-color: #d3dce6;
+}
+.add_user {
+  margin-left: 5px;
+}
 </style>

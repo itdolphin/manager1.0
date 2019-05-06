@@ -14,11 +14,11 @@
       <el-cascader expand-trigger="hover" :options="options" class="my_cascader" placeholder='请选择商品分类'></el-cascader>
     </div>
     <!-- tabs设置 -->
-    <el-tabs v-model="activeName">
+    <el-tabs v-model="activeName" class="my_tabs">
       <el-tab-pane label="动态参数" name="first">
         <div>
-          <el-button type="primary" disabled>动态参数</el-button>
-          <el-table :data="tableData" border style="width: 100%">
+          <el-button type="primary" size="small" disabled>添加动态参数</el-button>
+          <el-table :data="tableData" border style="width: 100%" class="tabs_content">
             <el-table-column prop="date" label width="50"></el-table-column>
             <el-table-column prop="date" label="#" width="50"></el-table-column>
             <el-table-column prop="name" label="商品参数" width="180"></el-table-column>
@@ -28,11 +28,11 @@
       </el-tab-pane>
       <el-tab-pane label="静态参数" name="second">
         <div>
-          <el-button type="primary" disabled>静态参数</el-button>
-          <el-table :data="tableData" border style="width: 100%">
-            <el-table-column prop="date" label width="50"></el-table-column>
-            <el-table-column prop="date" label="#" width="50"></el-table-column>
-            <el-table-column prop="name" label="参数" width="180"></el-table-column>
+          <el-button type="primary" size="small" disabled>添加静态参数</el-button>
+          <el-table :data="tableData" border style="width: 100%" class="tabs_content">
+            <el-table-column prop="date" label='#' width="50"></el-table-column>
+            <el-table-column prop="date" label="属性名称" width="250"></el-table-column>
+            <el-table-column prop="name" label="属性值" width="280"></el-table-column>
             <el-table-column prop="address" label="操作"></el-table-column>
           </el-table>
         </div>
@@ -323,19 +323,28 @@ export default {
 </script>
 
 <style lang='scss'>
+// 面包屑
 .my_breadcrumb {
   height: 40px;
   line-height: 40px;
   padding-left: 10px;
   background-color: #d3dce6;
 }
+// alert警告
 .my_alert{
   margin:20px 0;
 }
+// 商品分类选择
 .my_cates{
   margin-bottom: 20px;
   .my_cascader{
     margin-left: 20px;
+  }
+}
+// 动静参数tabs
+.my_tabs{
+  .tabs_content{
+    margin-top: 20px;
   }
 }
 </style>

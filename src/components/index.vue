@@ -8,7 +8,7 @@
           </div>
         </el-col>
         <el-col :span="19">
-          <div class="grid-content bg-purple-light" id="title">Apple Inc. Background monitoring center</div>
+          <div class="grid-content bg-purple-light" id="title">Apple Inc. Background Monitoring Center</div>
         </el-col>
         <el-col :span="1">
           <div class="grid-content bg-purple">
