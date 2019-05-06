@@ -18,7 +18,25 @@
       </el-row>
     </el-header>
     <el-container>
-      <el-aside class="index_aside" width="200px" >Aside</el-aside>
+      <el-aside class="index_aside" width="200px">
+        <el-menu
+          default-active="2"
+          class="el-menu-vertical-demo"
+        >
+          <el-submenu index="1">
+            <template slot="title">
+              <i class="el-icon-location"></i>
+              <span>导航一</span>
+            </template>
+            <el-menu-item-group>
+              <el-menu-item index="1-1"><i class="el-icon-menu"></i>选项1</el-menu-item>
+              <el-menu-item index="1-2"><i class="el-icon-menu"></i>选项2</el-menu-item>
+            </el-menu-item-group>
+          </el-submenu>
+          
+          
+        </el-menu>
+      </el-aside>
       <el-main class="index_main">Main</el-main>
     </el-container>
   </el-container>
@@ -49,8 +67,8 @@ body {
         font-size: 20px;
         color: #fff;
       }
-      #quit{
-          margin-top: 10px;
+      #quit {
+        margin-top: 10px;
       }
     }
     .index_aside {
