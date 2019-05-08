@@ -12,7 +12,7 @@
         </el-col>
         <el-col :span="1">
           <div class="grid-content bg-purple">
-              <el-button type="info" id="quit" circle>QUIT</el-button>
+              <el-button type="info" id="quit" circle @click='logout'>QUIT</el-button>
           </div>
         </el-col>
       </el-row>
@@ -88,7 +88,21 @@
 
 <script>
 export default {
-  name: "index"
+  name: "index",
+  methods:{
+    // 登出
+    logout(){
+      window.sessionStorage.removeItem('token')
+      // 编程式导航
+      this.$router.push('/login')
+    }
+  },
+  beforeCreate() {
+    if(!window.sessionStorage.getItem('token')){
+      this.$message.warning('请先登录~~~~')
+      this.$router.push('/login')
+    }
+  },
 };
 </script>
 

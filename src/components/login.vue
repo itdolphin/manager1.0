@@ -3,15 +3,15 @@
     <div class="center-box">
       <el-form label-position="top" label-width="80px" :model="loginForm" :rules="loginRules" ref="loginForm">
         <h2>用户登录</h2>
-        <el-form-item label="用户名" prop="username">
+        <el-form-item label="用户名" prop="username" >
           <el-input v-model="loginForm.username"></el-input>
         </el-form-item>
         <el-form-item label="密码" prop="password">
-          <el-input v-model="loginForm.password"></el-input>
+          <el-input v-model="loginForm.password" type='password'></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button class="my_login" type="primary">登陆</el-button>
-          <el-button class="my_reset" type="warning">重置</el-button>
+          <el-button class="my_login" type="primary" @click="submitForm('loginForm')">登陆</el-button>
+          <el-button class="my_reset" type="info" @click="resetForm('loginForm')">重置</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -42,22 +42,35 @@ export default {
   },
   // 生命周期钩子
   created() {
-    this.$request.sayHi();
+    // this.$request.sayHi();
   },
    methods: {
-    //  提交
-      submitForm(loginName) {
-        this.$refs[loginName].validate((valid) => {
+    //  提交表单
+      submitForm(loginForm) {
+        this.$refs[loginForm].validate((valid) => {
           if (valid) {
-            alert('submit!');
+            // alert('submit!');
+            this.$request.login(this.loginForm).then(res=>{
+               console.log(res);
+              if(res.data.meta.status==200){
+                // 登录成功
+                this.$message.success(res.data.meta.msg)
+                window.sessionStorage.setItem('token',res.data.data.token)
+                // 编程式跳转
+                this.$router.push("/")
+              }else{
+                // 登录失败
+                this.$message.warning(res.data.meta.msg)
+              }
+            })
           } else {
-            console.log('error submit!!');
+            this.$message.error('八嘎呀路')
             return false;
           }
         });
       },
-      resetForm(formName) {
-        this.$refs[formName].resetFields();
+      resetForm(loginForm) {
+        this.$refs[loginForm].resetFields();
       }
     }
 };
