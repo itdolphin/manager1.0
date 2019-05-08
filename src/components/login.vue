@@ -1,16 +1,17 @@
 <template>
   <div class="login">
     <div class="center-box">
-      <el-form label-position="top" label-width="80px">
+      <el-form label-position="top" label-width="80px" :model="loginForm" :rules="loginRules" ref="loginForm">
         <h2>用户登录</h2>
-        <el-form-item label="用户名">
-          <el-input></el-input>
+        <el-form-item label="用户名" prop="username">
+          <el-input v-model="loginForm.username"></el-input>
         </el-form-item>
-        <el-form-item label="密码">
-          <el-input ></el-input>
+        <el-form-item label="密码" prop="password">
+          <el-input v-model="loginForm.password"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button class="my_login" type="primary">登陆</el-button>
+          <el-button class="my_reset" type="warning">重置</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -19,7 +20,46 @@
 
 <script>
 export default {
-  name: "login"
+  name: "login",
+  // 表单数据验证
+  data() {
+    return {
+      loginForm: {
+        username: "",
+        password: ""
+      },
+      loginRules: {
+        username: [
+          { required: true, message: "请输入用户名", trigger: "blur" },
+          { min: 5, max: 8, message: "长度在 5 到 8 个字符", trigger: "blur" }
+        ],
+        password: [
+          { required: true, message: "请输入用户密码", trigger: "blur" },
+          { min: 6, max: 12, message: "长度在 6 到 12 个字符", trigger: "blur" }
+        ]
+      }
+    };
+  },
+  // 生命周期钩子
+  created() {
+    this.$request.sayHi();
+  },
+   methods: {
+    //  提交
+      submitForm(loginName) {
+        this.$refs[loginName].validate((valid) => {
+          if (valid) {
+            alert('submit!');
+          } else {
+            console.log('error submit!!');
+            return false;
+          }
+        });
+      },
+      resetForm(formName) {
+        this.$refs[formName].resetFields();
+      }
+    }
 };
 </script>
 
@@ -36,17 +76,17 @@ body {
     justify-content: center;
     align-items: center;
     .center-box {
-        width: 580px;
-        height: 350px;
-        border-radius: 5px;
-        padding: 50px 35px;
-        background-color: #fff;
-        h2{
-            text-align: center;
-        }
-        .my_login{
-            width: 100%;
-        }
+      width: 580px;
+      height: 350px;
+      border-radius: 5px;
+      padding: 50px 35px;
+      background-color: #fff;
+      h2 {
+        text-align: center;
+      }
+      .my_login {
+        width: 100%;
+      }
     }
   }
 }
