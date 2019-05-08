@@ -23,14 +23,22 @@
     </el-row>
     <!-- 表格结构 -->
     <el-table :data="tableData" border style="width: 100%">
-      <el-table-column prop="#" label="#" width="30"></el-table-column>
-      <el-table-column prop="name" label="姓名" width="160"></el-table-column>
+      <el-table-column prop="index" label="#" width="30" type="index"></el-table-column>
+      <el-table-column prop="username" label="姓名" width="160"></el-table-column>
       <el-table-column prop="email" label="邮箱" width="300"></el-table-column>
-      <el-table-column prop="phone" label="电话" width="300"></el-table-column>
-      <el-table-column prop="userstate" label="用户状态" width="80">
-        <el-switch v-model="value2" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
+      <el-table-column prop="mobile" label="电话" width="300"></el-table-column>
+      <el-table-column prop="mg_state" label="用户状态" width="80">
+        <template slot-scope="scope">
+          <el-switch v-model="scope.row.mg_state" active-color="green" inactive-color="deeppink"></el-switch>
+        </template>
       </el-table-column>
-      <el-table-column prop="run" label="操作" width="200"></el-table-column>
+      <el-table-column prop="run" label="操作" width="200">
+        <template slot-scope="scope">
+          <el-button size="mini" type="primary" icon="el-icon-edit" @click="handleEdit(scope.$index, scope.row)" plain></el-button>
+          <el-button size="mini" type="danger" icon="el-icon-delete" @click="handleDelete(scope.$index, scope.row)" plain></el-button>
+          <el-button size="mini" type="warning" icon="el-icon-check" @click="handleCheck(scope.$index, scope.row)" plain></el-button>
+        </template>
+      </el-table-column>
     </el-table>
     <!-- 分页/选页容量 -->
     <el-pagination
@@ -46,33 +54,40 @@
 <script>
 export default {
   name: "users",
+  methods: {
+    handleEdit(index,row) {
+       console.log(index);
+       console.log(row);
+    },
+    handleDelete(index,row) {
+       console.log(index);
+        console.log(row);
+    },
+    handleCheck(row,index) {
+      console.log(row);
+        console.log(index);
+        
+    }
+  },
   data() {
     return {
       value1: true,
-        value2: true,
-      tableData: [
-        {
-          bvf: "2016-05-02",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          bvf: "2016-05-04",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1517 弄"
-        },
-        {
-          bvf: "2016-05-01",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1519 弄"
-        },
-        {
-          bvf: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1516 弄"
-        }
-      ]
+      value2: true,
+      tableData: [],
+      // 增加提交的数据
+      userData: {
+        query: "",
+        pagenum: 1,
+        pagesize: 10
+      }
     };
+  },
+  // 调用接口
+  created() {
+    this.$request.getUsers(this.userData).then(res => {
+      console.log(res);
+      this.tableData = res.data.data.users;
+    });
   }
 };
 </script>

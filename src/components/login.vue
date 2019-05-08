@@ -11,7 +11,7 @@
         </el-form-item>
         <el-form-item>
           <el-button class="my_login" type="primary" @click="submitForm('loginForm')">登陆</el-button>
-          <el-button class="my_reset" type="info" @click="resetForm('loginForm')">重置</el-button>
+          <!-- <el-button class="my_reset" type="info" @click="resetForm('loginForm')">重置</el-button> -->
         </el-form-item>
       </el-form>
     </div>
@@ -30,12 +30,12 @@ export default {
       },
       loginRules: {
         username: [
-          { required: true, message: "请输入用户名", trigger: "blur" },
-          { min: 5, max: 8, message: "长度在 5 到 8 个字符", trigger: "blur" }
+          { required: true, message: "请输入用户名", trigger: "change" },
+          { min: 5, max: 8, message: "长度在 5 到 8 个字符", trigger: "change" }
         ],
         password: [
-          { required: true, message: "请输入用户密码", trigger: "blur" },
-          { min: 6, max: 12, message: "长度在 6 到 12 个字符", trigger: "blur" }
+          { required: true, message: "请输入用户密码", trigger: "change" },
+          { min: 6, max: 12, message: "长度在 6 到 12 个字符", trigger: "change" }
         ]
       }
     };
@@ -64,7 +64,7 @@ export default {
               }
             })
           } else {
-            this.$message.error('八嘎呀路')
+            this.$message.warning('八嘎呀路')
             return false;
           }
         });

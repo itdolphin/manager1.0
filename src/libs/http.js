@@ -9,6 +9,17 @@ const request = {
   // 方便后期维护
   login(params) {
     return axios.post('login',params)
+  },
+//   获取用户列表
+  getUsers(params){
+    return axios.get('users',{
+      // get的数据需要这样写  
+        params,
+        // 用headers代token
+        headers:{
+            Authorization:window.sessionStorage.getItem('token')
+        }
+    })
   }
 };
 

@@ -12,7 +12,8 @@
         </el-col>
         <el-col :span="1">
           <div class="grid-content bg-purple">
-              <el-button type="info" id="quit" circle @click='logout'>QUIT</el-button>
+            <el-button type="text" @click="logout" id="quit">QUIT </el-button>
+              
           </div>
         </el-col>
       </el-row>
@@ -91,11 +92,26 @@ export default {
   name: "index",
   methods:{
     // 登出
-    logout(){
-      window.sessionStorage.removeItem('token')
-      // 编程式导航
+     logout() {
+        this.$confirm('真的要退出吗?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.$message({
+            type: 'success',
+            message: '退出成功!'
+          });
+         window.sessionStorage.removeItem('token') 
+         // 编程式导航
       this.$router.push('/login')
-    }
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消退出'
+          });          
+        });
+      }
   },
   beforeCreate() {
     if(!window.sessionStorage.getItem('token')){

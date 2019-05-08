@@ -6,6 +6,7 @@ import VueRouter from "vue-router";
 // 导入vue去use router
 Vue.use(VueRouter)
 
+// 导入index各个view页面
 import login from "./components/login.vue"
 import index from "./components/index.vue"
 import users from "./components/users.vue"
@@ -21,6 +22,7 @@ const routes=[
     {path:'/login',component:login},   
     {path:'/',component:index,
     children:[
+        {path:'',redirect:'users'},
         {path:'users',component:users},
         {path:'roles',component:roles},
         {path:'rights',component:rights},
