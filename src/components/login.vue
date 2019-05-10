@@ -31,7 +31,7 @@ export default {
       loginRules: {
         username: [
           { required: true, message: "请输入用户名", trigger: "change" },
-          { min: 5, max: 8, message: "长度在 5 到 8 个字符", trigger: "change" }
+          { min: 4, max: 8, message: "长度在 4 到 8 个字符", trigger: "change" }
         ],
         password: [
           { required: true, message: "请输入用户密码", trigger: "change" },
