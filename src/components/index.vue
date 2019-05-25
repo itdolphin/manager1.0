@@ -18,66 +18,23 @@
         </el-col>
       </el-row>
     </el-header>
+    <!--左侧权限菜单 -->
     <el-container>
       <el-aside class="index_aside" width="200px">
         <el-menu router
           default-active="2"
           class="el-menu-vertical-demo"
         >
-            <el-submenu index="1">
+            <el-submenu :index="item.order+''" v-for="(item, index) in $store.state.menusList" :key="index">
             <template slot="title">
               <i class="el-icon-location"></i>
-              <span>用户管理</span>
+              <span>{{item.authName}}</span>
             </template>
-            <el-menu-item-group>
-              <el-menu-item index="users"><i class="el-icon-menu"></i>用户列表</el-menu-item>
+            <el-menu-item-group v-for="(item1, index1) in item.children" :key="index1">
+              <el-menu-item :index="item1.path"><i class="el-icon-menu"></i>{{item1.authName}}</el-menu-item>
             </el-menu-item-group>
-            </el-submenu>
-            <el-submenu index="2">
-            <template slot="title">
-              <i class="el-icon-location"></i>
-              <span>权限管理</span>
-            </template>
-            <el-menu-item-group>
-              <el-menu-item index="roles"><i class="el-icon-menu"></i>角色管理</el-menu-item>
-            </el-menu-item-group>
-            <el-menu-item-group>
-              <el-menu-item index="rights"><i class="el-icon-menu"></i>权限管理</el-menu-item>
-            </el-menu-item-group>
-            </el-submenu>
-            <el-submenu index="3">
-            <template slot="title">
-              <i class="el-icon-location"></i>
-              <span>商品管理</span>
-            </template>
-            <el-menu-item-group>
-              <el-menu-item index="goods"><i class="el-icon-menu"></i>商品列表</el-menu-item>
-            </el-menu-item-group>
-            <el-menu-item-group>
-              <el-menu-item index="params"><i class="el-icon-menu"></i>分类参数</el-menu-item>
-            </el-menu-item-group>
-            <el-menu-item-group>
-              <el-menu-item index="categories"><i class="el-icon-menu"></i>商品分类</el-menu-item>
-            </el-menu-item-group>
-            </el-submenu>
-            <el-submenu index="4">
-            <template slot="title">
-              <i class="el-icon-location"></i>
-              <span>订单管理</span>
-            </template>
-            <el-menu-item-group>
-              <el-menu-item index="orders"><i class="el-icon-menu"></i>订单列表</el-menu-item>
-            </el-menu-item-group>
-            </el-submenu>
-            <el-submenu index="5">
-            <template slot="title">
-              <i class="el-icon-location"></i>
-              <span>数据统计</span>
-            </template>
-            <el-menu-item-group>
-              <el-menu-item index="reports"><i class="el-icon-menu"></i>数据报表</el-menu-item>
-            </el-menu-item-group>
-            </el-submenu>
+            </el-submenu> 
+
         </el-menu>
       </el-aside>
       <el-main class="index_main">
@@ -88,8 +45,17 @@
 </template>
 
 <script>
+
 export default {
   name: "index",
+
+  data(){
+    return {
+      // 左侧权限菜单
+    menusList:[]
+
+    }
+  },
   methods:{
     // 登出
      logout() {
@@ -111,7 +77,8 @@ export default {
             message: '已取消退出'
           });          
         });
-      }
+      },
+   
   },
   beforeCreate() {
     if(!window.sessionStorage.getItem('token')){
@@ -119,6 +86,16 @@ export default {
       this.$router.push('/login')
     }
   },
+  created(){
+    this.$request.getMenusRights().then(res=>{
+       console.log(res);
+      //  赋值给权限菜单
+      //  this.menusList=res.data.data
+      //  保存到仓库中
+      //  console.log(res.data.data);
+       this.$store.commit('changeMenusList',res.data.data)
+    })
+  }
 };
 </script>
 
@@ -153,7 +130,7 @@ body {
       background-color: #e9eef3;
       
     }
-    .index_main.el-main{
+    .index_main .el-main{
         padding-top: 0;
       }
   }

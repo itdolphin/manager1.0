@@ -8,13 +8,18 @@
     </el-breadcrumb>
     
     <!-- 表格结构 -->
-    <el-table :data="tableData" border style="width: 100%">
-      <el-table-column prop="#" label="#" width="180"></el-table-column>
-      <el-table-column prop="name" label="姓名" width="180"></el-table-column>
-      <el-table-column prop="email" label="邮箱" width="180"></el-table-column>
-      <el-table-column prop="phone" label="电话" width="180"></el-table-column>
-      <el-table-column prop="userstate" label="用户状态" width="180"></el-table-column>
-      <el-table-column prop="run" label="操作" width="180"></el-table-column>
+    <el-table :data="tableData" border style="width: 100%" v-loading="loading">
+      <el-table-column  label="#" type='index' ></el-table-column>
+      <el-table-column prop="authName" label="权限名称" width="200"></el-table-column>
+      <el-table-column prop="path" label="路径" width="200"></el-table-column>
+      <el-table-column prop="level" label="层级" width="200">
+        <!-- 自定义模板 -->
+        <template slot-scope="niubi">
+            {{niubi.row.level==0?'第一级':''}}
+            {{niubi.row.level==1?'第二级':''}}
+            {{niubi.row.level==2?'第三级':''}}
+        </template>
+      </el-table-column>
     </el-table>
    
   </div>
@@ -46,8 +51,32 @@ export default {
           name: "王小虎",
           address: "上海市普陀区金沙江路 1516 弄"
         }
-      ]
+      ],
+      loading:true
     };
+  },
+  created(){
+    // this.loading=true
+    this.$request.rightsList().then(res=>{
+       console.log(res);  
+       this.tableData=res.data.data
+        // setTimeout(function(){
+          setTimeout(() => {
+            // console.log(this);
+            
+            this.loading=false
+          }, 1000);
+        // },1000)
+      //  this.tableData.forEach(v => {
+      //    if(v.level==0){
+      //      v.level='第一级'
+      //    } else if(v.level==1){
+      //       v.level='第二级'
+      //    } else{
+      //      v.level='第三级'
+      //    }
+      //  });
+    })
   }
 };
 </script>

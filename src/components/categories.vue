@@ -16,19 +16,17 @@
     </el-row>
     <!-- 表格结构 -->
     <el-table :data="tableData" border style="width: 100%">
-      <el-table-column prop="#" label="#" width="180"></el-table-column>
-      <el-table-column prop="name" label="姓名" width="180"></el-table-column>
-      <el-table-column prop="email" label="邮箱" width="180"></el-table-column>
-      <el-table-column prop="phone" label="电话" width="180"></el-table-column>
-      <el-table-column prop="userstate" label="用户状态" width="180"></el-table-column>
-      <el-table-column prop="run" label="操作" width="180"></el-table-column>
+      <el-table-column prop="cat_name" label="分类名称" width="180"></el-table-column>
+      <el-table-column prop="cat_level" label="级别" width="180"></el-table-column>
+      <el-table-column prop="cat_deleted" label="是否有效" width="180"></el-table-column>
+      <el-table-column label="操作" width="180"></el-table-column>
     </el-table>
     <!-- 分页/选页容量 -->
     <el-pagination
-      :current-page="1"
-      :page-size="6"
+      :current-page="pageSet.pagenum"
+      :page-size="pageSet.pagesize"
       layout="total, sizes, prev, pager, next, jumper"
-      :total="100">
+      :total="total">
     </el-pagination>
   </div>
 </template>
@@ -59,8 +57,20 @@ export default {
           name: "王小虎",
           address: "上海市普陀区金沙江路 1516 弄"
         }
-      ]
+      ],
+      total:0,
+      pageSet:{
+        pagesize:5,
+        pagenum:1,
+      }
     };
+  },
+  created(){
+    this.$request.goodsCategories(1).then(res=>{
+       console.log(res);
+       this.tableData=res.data.data
+       this.total=res.data.data.length
+    })
   }
 };
 </script>

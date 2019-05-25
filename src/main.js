@@ -11,8 +11,13 @@ import request from './libs/http'
 Vue.use(request)
 // 导入路由
 import router from "./router"
+// 导入仓库
+import store from './store'
 new Vue({
   render: h => h(App),
   // 挂在vue上面
-  router
+  router,
+  store
 }).$mount('#app')
+
+

@@ -4,7 +4,11 @@ import axios from "axios";
 axios.defaults.baseURL = "http://localhost:8888/api/private/v1/";
 // 导入vue
 import Vue from 'vue'
-// 增加一个axios请求拦截器
+// 导入router
+import router from "../router"
+// import {Message} from 'element-ui'
+
+// 增加一个  axios请求拦截器
 axios.interceptors.request.use(function (config) {
   // Do something before request is sent
   config.headers.Authorization=window.sessionStorage.getItem('token')
@@ -14,12 +18,21 @@ axios.interceptors.request.use(function (config) {
   return Promise.reject(error);
 });
 
-// 增加一个axios响应拦截器
+// 增加一个  axios响应拦截器
 axios.interceptors.response.use(function (response) {
   // Do something with response data
+  //  console.log(response);
   if(response.data.meta.status==200){
     // new Vue().$message.success(response.data.meta.msg);
     Vue.prototype.$message.success(response.data.meta.msg);
+    
+    // Message.success()
+  } else if(response.data.meta.status==400 && response.data.meta.msg=='无效token'){
+    new Vue().$message.warning('F.B.I WARNNING---you are a badguy')
+    router.push('login')
+    window.sessionStorage.removeItem('token')
+    // 避免看到无谓的错误 设置
+    response.data.data=[]
   }
   return response;
 }, function (error) {
@@ -77,7 +90,76 @@ const request = {
     return axios.put(`users/${params.id}/role`,{
       rid:params.rid
     })
-  }
+  },
+  // 添加角色
+  addRole(params){
+    return axios.post('roles',params)
+  },
+  // 删除角色
+  deleteRole(id){
+    return axios.delete(`roles/${id}`)
+  },
+  // 根据 ID 查询角色
+  queryRoleById(id){
+    return axios.get(`roles/${id}`)
+  },
+  // 编辑用户角色
+  editRoles(params){
+    // return axios.put(`roles/${params.id}`,{
+    //   roleName:params.roleName,
+    //   roleDesc:params.roleDesc
+    // })
+    return axios.put(`roles/${params.id}`,params)
+  },
+  // 所有列型权限列表
+  rightsList(){
+    return axios.get(`rights/list`)
+  },
+  // 数据报表统计
+  dataReports(){
+    return axios.get(`reports/type/1`)
+  },
+  // 获取所有订单
+  getAllOrders(params){
+    return axios.get('orders',{params})
+  },
+  // 删除角色指定权限
+  deleteSpecRights(params){
+    return axios.delete(`roles/${params.roleId}/rights/${params.rightId}`)
+  },
+  // 所有树形权限获取
+  treeRights(){
+    return axios.get('rights/tree')
+  },
+  // 左侧菜单权限
+  getMenusRights(){
+    return axios.get('menus')
+  },
+  // 所有的商品数据
+  getGoodsList(params){
+    return axios.get('goods',{params})
+  },
+  // 商品种类列表
+  goodsCategories(type){
+    return axios.get(`categories?type=${type}`)
+  },
+  // 删除某个商品
+  deleteSpecGoods(id){
+    return axios.delete(`goods/${id}`)
+  },
+  // 编辑某个商品
+  editSpecGoods(params){
+    return axios.put(`goods/${params.id}`,params)
+  },
+  // 获取每个角色的权限
+
+  // 为角色授权
+  setRolesRights(params){
+    return axios.post(`roles/${params.roleId}/rights`,{
+      rids:params.rids
+    })
+  },
+  
 
 
 };

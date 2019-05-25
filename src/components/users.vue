@@ -28,7 +28,7 @@
     </el-row>
     <!-- 表格结构 -->
     <el-table :data="tableData" border style="width: 100%">
-      <el-table-column prop="index" label="#" width="30" type="index"></el-table-column>
+      <el-table-column  label="#" width="30" type="index"></el-table-column>
       <el-table-column prop="username" label="姓名" width="160"></el-table-column>
       <el-table-column prop="email" label="邮箱" width="300"></el-table-column>
       <el-table-column prop="mobile" label="电话" width="300"></el-table-column>
@@ -42,7 +42,7 @@
           ></el-switch>
         </template>
       </el-table-column>
-      <el-table-column prop="run" label="操作" width="200">
+      <el-table-column  label="操作" width="200">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -275,6 +275,9 @@ export default {
     getUsers() {
       this.$request.getUsers(this.userData).then(res => {
         // console.log(res);
+        if(!res.data.data){
+            return
+        }
         this.tableData = res.data.data.users;
         this.total = res.data.data.total;
       });
@@ -288,7 +291,7 @@ export default {
           console.log(res);
         });
     },
-    // 添加用户 & 编辑用户
+    // 添加用户 & 编辑用户 & 修改用户角色
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
