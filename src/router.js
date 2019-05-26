@@ -58,7 +58,8 @@ router.beforeEach((to, from, next) => {
     // next()
     if(to.matched.length==0){
         // 不存在
-        next('error')
+        next('/error')
+        // error为相对路径,,,/error为绝对路径,
     } else{
         // 存在这个页面
         next()

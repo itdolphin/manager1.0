@@ -88,6 +88,8 @@ export default {
       },
       // 商品总数
       total:0,
+      // 搜索关键字
+      input3:''
     };
   },
   methods:{

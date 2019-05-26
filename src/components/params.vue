@@ -11,29 +11,55 @@
     <!-- 级联结构 -->
     <div class="my_cates">
       <span>请选择商品分类:</span>
-      <el-cascader expand-trigger="hover" :options="options" class="my_cascader" placeholder='请选择商品分类'></el-cascader>
+      <el-cascader
+        :props="props"
+        expand-trigger="hover"
+        @change="searchSpecGoods"
+        :options="options"
+        class="my_cascader"
+        placeholder="请选择商品分类"
+      ></el-cascader>
     </div>
     <!-- tabs设置 -->
     <el-tabs v-model="activeName" class="my_tabs">
       <el-tab-pane label="动态参数" name="first">
         <div>
-          <el-button type="primary" size="small" disabled>添加动态参数</el-button>
-          <el-table :data="tableData" border style="width: 100%" class="tabs_content">
-            <el-table-column prop="date" label width="50"></el-table-column>
-            <el-table-column prop="date" label="#" width="50"></el-table-column>
-            <el-table-column prop="name" label="商品参数" width="180"></el-table-column>
-            <el-table-column prop="address" label="操作"></el-table-column>
+          <el-button type="primary" size="small" :disabled="!isOk">添加动态参数</el-button>
+          <el-table :data="dynamicTable" border style="width: 100%" class="tabs_content">
+            <el-table-column prop="date" label width="50" type="expand">
+              <template slot-scope="props">
+              <el-form label-position="left" inline class="demo-table-expand">
+                <el-form-item >
+                  <el-button v-for="(row, index) in props" :key="index" type="primary" 
+                  plain size="small">{{row}}</el-button>
+                </el-form-item>
+              </el-form>
+            </template>
+            </el-table-column>
+            <el-table-column prop="index" label="#" width="50" type="index"></el-table-column>
+            <el-table-column prop="attr_name" label="商品参数" width="180"></el-table-column>
+            <el-table-column prop="address" label="操作">
+              <template>
+              <el-button type="primary" icon="el-icon-edit" plain size="small"></el-button>
+              <el-button type="danger" icon="el-icon-delete" plain size="small"></el-button>
+              </template>
+            </el-table-column>
           </el-table>
         </div>
       </el-tab-pane>
       <el-tab-pane label="静态参数" name="second">
         <div>
-          <el-button type="primary" size="small" disabled>添加静态参数</el-button>
-          <el-table :data="tableData" border style="width: 100%" class="tabs_content">
-            <el-table-column prop="date" label='#' width="50"></el-table-column>
-            <el-table-column prop="date" label="属性名称" width="250"></el-table-column>
-            <el-table-column prop="name" label="属性值" width="280"></el-table-column>
-            <el-table-column prop="address" label="操作"></el-table-column>
+          <el-button type="primary" size="small" :disabled="!isOk">添加静态参数</el-button>
+          <el-table :data="staticTable" border style="width: 100%" class="tabs_content">
+            <el-table-column prop="date" label="#" width="50" type="index"></el-table-column>
+            <el-table-column prop="attr_name" label="属性名称" width="250"></el-table-column>
+            <el-table-column prop="attr_vals" label="属性值" width="280"></el-table-column>
+            <el-table-column prop="address" label="操作">
+              <!-- <template> -->
+              <el-button type="primary" icon="el-icon-edit" plain size="small"></el-button>
+              <el-button type="danger" icon="el-icon-delete" plain size="small"></el-button>
+              <!-- </template> -->
+            </el-table-column>
           </el-table>
         </div>
       </el-tab-pane>
@@ -315,9 +341,47 @@ export default {
           ]
         }
       ],
-      activeName:'first'
+      // 级联选择器的对应关系
+      props: {
+        value: "cat_id",
+        label: "cat_name",
+        children: "children"
+      },
+      activeName: "first",
+      // 静态数据
+      staticTable: [],
+      // 动态数据
+      dynamicTable: [],
+      // 是否符合
+      isOk: false
     };
-
+  },
+  methods: {
+    // 选中某个商品
+    searchSpecGoods(value) {
+      console.log(value);
+      if (value.length == 3) {
+        this.isOk = true;
+        this.$request.dynamicGoodsParams(value[2]).then(res => {
+          this.dynamicTable = res.data.data;
+          console.log(res);
+        });
+        this.$request.staticGoodsParams(value[2]).then(res => {
+          this.staticTable = res.data.data;
+          console.log(res);
+        });
+      } else {
+        this.isOk = false;
+        this.dynamicTable = [];
+        this.staticTable = [];
+      }
+    }
+  },
+  created() {
+    this.$request.getAllGoodsCate().then(res => {
+      console.log(res);
+      this.options = res.data.data;
+    });
   }
 };
 </script>
@@ -331,20 +395,21 @@ export default {
   background-color: #d3dce6;
 }
 // alert警告
-.my_alert{
-  margin:20px 0;
+.my_alert {
+  margin: 20px 0;
 }
 // 商品分类选择
-.my_cates{
+.my_cates {
   margin-bottom: 20px;
-  .my_cascader{
+  .my_cascader {
     margin-left: 20px;
   }
 }
 // 动静参数tabs
-.my_tabs{
-  .tabs_content{
+.my_tabs {
+  .tabs_content {
     margin-top: 20px;
   }
 }
+
 </style>

@@ -23,18 +23,19 @@
       <el-aside class="index_aside" width="200px">
         <el-menu router
           default-active="2"
+          unique-opened
           class="el-menu-vertical-demo"
         >
             <el-submenu :index="item.order+''" v-for="(item, index) in $store.state.menusList" :key="index">
-            <template slot="title">
-              <i class="el-icon-location"></i>
-              <span>{{item.authName}}</span>
-            </template>
-            <el-menu-item-group v-for="(item1, index1) in item.children" :key="index1">
-              <el-menu-item :index="item1.path"><i class="el-icon-menu"></i>{{item1.authName}}</el-menu-item>
-            </el-menu-item-group>
+              <template slot="title">
+                <i class="el-icon-location"></i>
+                <span>{{item.authName}}</span>
+              </template> 
+              <!-- <el-menu-item-group > -->
+                <el-menu-item v-for="(item1, index1) in item.children" :key="index1"
+                 :index="'/'+item1.path"><i class="el-icon-menu"></i>{{item1.authName}}</el-menu-item>
+              <!-- </el-menu-item-group> -->
             </el-submenu> 
-
         </el-menu>
       </el-aside>
       <el-main class="index_main">

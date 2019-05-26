@@ -159,7 +159,22 @@ const request = {
       rids:params.rids
     })
   },
-  
+  // 获取所有商品
+  getAllGoodsCate(){
+    return axios.get('categories?type=3')
+  },
+  // 根据ID查询商品
+  getSpecGoods(goodsId){
+    return axios.get(`goods/${goodsId}`)
+  },
+  // 查询商品的动态参数
+  dynamicGoodsParams(id){
+    return axios.get(`categories/${id}/attributes?sel=many`)
+  },
+  // 查询商品的静态参数
+  staticGoodsParams(id){
+    return axios.get(`categories/${id}/attributes?sel=only`)
+  }
 
 
 };

@@ -45,7 +45,7 @@
                   <!-- 第三级tag -->
                   <el-tag
                     class="my_tag"
-                    v-for="(level3,index3) in level2.children"
+                    v-for="(level3) in level2.children"
                     type="warning"
                     :key="level3.id"
                     closable
